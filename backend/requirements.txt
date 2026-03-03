@@ -1,0 +1,6 @@
+fastapi
+uvicorn[standard]
+websockets
+thefuzz[speedup]
+pydantic
+pydantic-settings
