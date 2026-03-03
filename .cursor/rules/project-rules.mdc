@@ -1,0 +1,57 @@
+---
+alwaysApply: true
+---
+# LogPaw 项目规范
+
+## 自测规范（必须遵守）
+
+代码变更后，必须执行以下自测步骤：
+
+1. **后端自测**
+   - `uvicorn app.main:app --port 8001` 启动成功
+   - `curl http://localhost:8001/health` 返回 200
+   - 有设备时：`curl http://localhost:8001/api/v1/device` 返回设备信息
+   - 应用搜索：`curl "http://localhost:8001/api/v1/device/apps?q=<keyword>"` 返回匹配结果
+
+2. **前端自测**
+   - `npx tsc --noEmit` 零错误
+   - `npm run dev` 启动成功
+   - 浏览器访问 http://localhost:3000 页面正常渲染
+   - **验证依赖版本兼容性**：安装新依赖后检查其 API 是否与代码使用方式一致
+
+3. **WebSocket 自测**（有设备时）
+   - 连接 `/ws/logs/{package}` 能收到日志流
+
+4. **提交前检查**
+   - 前端 TypeScript 编译通过
+   - 后端无 import 错误
+   - 所有 API 端点可正常响应
+
+## 技术栈
+
+- 后端: FastAPI (Python 3.11+) + WebSocket + asyncio
+- 前端: React 19 + TypeScript + Vite + Ant Design 6 + Zustand
+- 虚拟滚动: react-window v1（v2 API 不兼容）
+- 端口: 后端 8001 / 前端 3000
+
+## 设计风格
+
+继承 Liok 平台暖棕色调主题：
+- 主背景 #FFFAF3 / 卡片 #FFFFFF
+- 主色 #D4A574 / 强调色 #C17C4E
+- 日志面板背景 #2D2B28 / 日志文字 #D6CBBC
+
+## 代码规范
+
+- 回复使用中文
+- 代码注释仅在逻辑复杂时添加
+- 代码变更后必须更新 docs/changelog.md
+- 变更后 git commit 并 push GitHub
+
+## 关键文件
+
+- `backend/app/core/android/log_capture.py` — 全量采集 + PID 过滤核心
+- `backend/app/core/android/app_finder.py` — 应用模糊匹配
+- `backend/app/websocket/log_ws.py` — WebSocket 日志流
+- `frontend/src/pages/LogViewer/index.tsx` — 前端主页面
+- `frontend/src/pages/LogViewer/LogPanel.tsx` — 日志面板（虚拟滚动）
