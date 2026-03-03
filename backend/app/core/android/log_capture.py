@@ -69,10 +69,18 @@ class LogCapture(LogProvider):
 
         await self._refresh_pids()
 
-        self._process = await self._client.start_logcat()
+        self._process = await self._client.start_logcat("-T", "1")
         self._capture_task = asyncio.create_task(self._read_loop())
         self._pid_task = asyncio.create_task(self._pid_refresh_loop())
         logger.info("Capture started for %s, initial PIDs: %s", package_name, self._pid_set)
+
+        if self._on_status:
+            await self._on_status({
+                "type": "status",
+                "event": "pids_info",
+                "message": f"正在追踪 PID: {self._pid_set or '(应用未运行)'}",
+                "all_pids": list(self._pid_set),
+            })
 
     async def stop_capture(self):
         self._running = False

@@ -24,6 +24,7 @@ export default function LogPanel({ jumpToIndex }: Props) {
   const listRef = useRef<List>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerHeight, setContainerHeight] = useState(600);
+  const isProgrammaticScroll = useRef(false);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -45,26 +46,29 @@ export default function LogPanel({ jumpToIndex }: Props) {
 
   useEffect(() => {
     if (autoScroll && listRef.current && filteredLogs.length > 0) {
+      isProgrammaticScroll.current = true;
       listRef.current.scrollToItem(filteredLogs.length - 1, 'end');
     }
   }, [filteredLogs.length, autoScroll]);
 
   useEffect(() => {
     if (jumpToIndex !== null && listRef.current && jumpToIndex < filteredLogs.length) {
+      isProgrammaticScroll.current = true;
       listRef.current.scrollToItem(jumpToIndex, 'center');
-      setAutoScroll(false);
     }
-  }, [jumpToIndex, filteredLogs.length, setAutoScroll]);
+  }, [jumpToIndex, filteredLogs.length]);
 
   const handleScroll = useCallback(
-    ({ scrollOffset, scrollUpdateWasRequested }: { scrollOffset: number; scrollUpdateWasRequested: boolean }) => {
-      if (scrollUpdateWasRequested) return;
-      const totalHeight = filteredLogs.length * ROW_HEIGHT;
-      const h = containerRef.current?.clientHeight ?? 600;
-      const isAtBottom = scrollOffset + h >= totalHeight - ROW_HEIGHT * 2;
-      setAutoScroll(isAtBottom);
+    ({ scrollUpdateWasRequested }: { scrollOffset: number; scrollUpdateWasRequested: boolean }) => {
+      if (scrollUpdateWasRequested || isProgrammaticScroll.current) {
+        isProgrammaticScroll.current = false;
+        return;
+      }
+      if (autoScroll) {
+        setAutoScroll(false);
+      }
     },
-    [filteredLogs.length, setAutoScroll]
+    [autoScroll, setAutoScroll]
   );
 
   const Row = useCallback(

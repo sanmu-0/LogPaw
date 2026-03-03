@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback } from 'react';
 import { AutoComplete, Input, Tag, Space } from 'antd';
 import { SearchOutlined, CloseCircleFilled } from '@ant-design/icons';
 import { api } from '../../api';
@@ -14,7 +14,6 @@ interface Props {
 export default function AppSearch({ disabled, selectedApp, onSelect, onClear }: Props) {
   const [options, setOptions] = useState<{ value: string; label: React.ReactNode }[]>([]);
   const [searching, setSearching] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
 
   const handleSearch = useCallback(async (value: string) => {
     if (!value) {
@@ -25,7 +24,7 @@ export default function AppSearch({ disabled, selectedApp, onSelect, onClear }: 
     try {
       const result = await api.searchApps(value);
       setOptions(
-        result.items.map((item: AppItem, idx: number) => ({
+        result.items.map((item: AppItem) => ({
           value: item.package_name,
           label: (
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '4px 0' }}>
@@ -65,29 +64,29 @@ export default function AppSearch({ disabled, selectedApp, onSelect, onClear }: 
   }
 
   return (
-    <div ref={containerRef} style={{ position: 'relative', zIndex: 10 }}>
-      <AutoComplete
-        style={{ width: 460 }}
-        options={options}
-        onSearch={handleSearch}
-        onSelect={(val: string) => onSelect(val)}
-        disabled={disabled}
-        getPopupContainer={() => containerRef.current || document.body}
-        popupMatchSelectWidth={460}
-      >
-        <Input
-          prefix={<SearchOutlined style={{ color: '#8C8680' }} />}
-          placeholder="输入应用名搜索（如 kb、vicoo、kiwibit）..."
-          allowClear
-          loading={searching}
-          size="middle"
-          autoComplete="off"
-          autoCorrect="off"
-          autoCapitalize="off"
-          spellCheck={false}
-        />
-      </AutoComplete>
-    </div>
+    <AutoComplete
+      style={{ width: 460 }}
+      options={options}
+      onSearch={handleSearch}
+      onSelect={(val: string) => onSelect(val)}
+      disabled={disabled}
+      popupMatchSelectWidth={460}
+    >
+      <Input
+        prefix={<SearchOutlined style={{ color: '#8C8680' }} />}
+        placeholder="输入应用名搜索（如 kb、vicoo、kiwibit）..."
+        allowClear
+        loading={searching}
+        size="middle"
+        name="logpaw-app-search"
+        autoComplete="new-password"
+        autoCorrect="off"
+        autoCapitalize="off"
+        spellCheck={false}
+        data-form-type="other"
+        data-lpignore="true"
+      />
+    </AutoComplete>
   );
 }
 

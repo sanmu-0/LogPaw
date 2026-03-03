@@ -18,6 +18,15 @@ const theme: ThemeConfig = {
   },
 };
 
+export const LEVEL_COLORS: Record<string, { bg: string; text: string; border: string }> = {
+  V: { bg: '#757575', text: '#FFFFFF', border: '#757575' },
+  D: { bg: '#1976D2', text: '#FFFFFF', border: '#1976D2' },
+  I: { bg: '#388E3C', text: '#FFFFFF', border: '#388E3C' },
+  W: { bg: '#F57C00', text: '#FFFFFF', border: '#F57C00' },
+  E: { bg: '#D32F2F', text: '#FFFFFF', border: '#D32F2F' },
+  F: { bg: '#B71C1C', text: '#FFFFFF', border: '#B71C1C' },
+};
+
 export const LOG_COLORS: Record<string, string> = {
   V: '#9E9E9E',
   D: '#64B5F6',
