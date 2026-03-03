@@ -115,8 +115,17 @@ LogPaw/
 | GET | `/api/v1/logs/full` | 获取全量日志 |
 | WS | `/ws/logs/{package_name}` | 实时日志流 |
 
+## Liok 平台集成
+
+LogPaw 已集成到 Liok 自动化平台，作为内置工具模块：
+
+- 后端模块位于 `Liok-auto-platform/backend/app/logpaw/`
+- 前端页面位于 `Liok-auto-platform/frontend/src/pages/LogPaw/`
+- API 前缀为 `/api/v1/logpaw/`
+- WebSocket 端点为 `/ws/logpaw/{package_name}`
+- 侧边栏菜单可直接访问
+
 ## 后续规划
 
 - [ ] iOS 设备支持（基于 pymobiledevice3）
-- [ ] 集成到 Liok 自动化平台
 - [ ] 自动崩溃检测与标记
