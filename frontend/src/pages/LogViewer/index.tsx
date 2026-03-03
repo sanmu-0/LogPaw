@@ -67,52 +67,56 @@ export default function LogViewer() {
         backgroundColor: '#FFFAF3',
       }}
     >
-      {/* Header */}
+      {/* Header: Logo + Device + AppSearch in one row */}
       <div
         style={{
-          padding: '8px 16px',
+          padding: '6px 16px',
           display: 'flex',
-          justifyContent: 'space-between',
           alignItems: 'center',
+          gap: 16,
           borderBottom: '1px solid #E8E0D8',
           backgroundColor: '#FFFFFF',
           boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
+          flexShrink: 0,
+          zIndex: 20,
         }}
       >
         <Title
-          level={4}
+          level={5}
           style={{
             margin: 0,
             color: '#2D2B28',
             fontWeight: 700,
             letterSpacing: '-0.5px',
+            whiteSpace: 'nowrap',
           }}
         >
           <span style={{ color: '#C17C4E' }}>Log</span>Paw
         </Title>
+
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <AppSearch
+            disabled={!device}
+            selectedApp={selectedApp}
+            onSelect={handleSelectApp}
+            onClear={handleClearApp}
+          />
+        </div>
+
         <DeviceBar onDeviceDetected={setDevice} />
       </div>
 
-      {/* App Search */}
-      <div style={{ borderBottom: '1px solid #E8E0D8', backgroundColor: '#FFFFFF' }}>
-        <AppSearch
-          disabled={!device}
-          selectedApp={selectedApp}
-          onSelect={handleSelectApp}
-          onClear={handleClearApp}
-        />
-      </div>
-
-      {/* Filter + Search */}
+      {/* Filter + Search (compact) */}
       {selectedApp && (
         <div
           style={{
-            padding: '6px 16px',
+            padding: '4px 16px',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
             borderBottom: '1px solid #E8E0D8',
             backgroundColor: '#FFFFFF',
+            flexShrink: 0,
           }}
         >
           <LevelFilter />
