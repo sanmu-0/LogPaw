@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Tag, Space, Spin, Typography } from 'antd';
 import { MobileOutlined, UsbOutlined, ReloadOutlined } from '@ant-design/icons';
-import { api, DeviceInfo } from '../../api';
+import { api } from '../../api';
+import type { DeviceInfo } from '../../api';
 
 const { Text } = Typography;
 

@@ -1,6 +1,7 @@
 import { useRef, useEffect, useCallback, useMemo, useState } from 'react';
 import { FixedSizeList as List } from 'react-window';
-import { useLogStore, LogEntry } from '../../hooks/useLogStore';
+import { useLogStore } from '../../hooks/useLogStore';
+import type { LogEntry } from '../../hooks/useLogStore';
 import { LOG_COLORS, LOG_BG, LOG_TEXT, SYS_LOG_BG, SYS_LOG_TEXT } from '../../styles/theme';
 
 interface Props {

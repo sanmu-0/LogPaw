@@ -1,7 +1,8 @@
 import { useState, useCallback } from 'react';
 import { AutoComplete, Input, Tag, Space } from 'antd';
 import { SearchOutlined, CloseCircleFilled } from '@ant-design/icons';
-import { api, AppItem } from '../../api';
+import { api } from '../../api';
+import type { AppItem } from '../../api';
 
 interface Props {
   disabled: boolean;

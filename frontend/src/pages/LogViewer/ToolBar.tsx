@@ -6,7 +6,8 @@ import {
   CloudDownloadOutlined,
   VerticalAlignBottomOutlined,
 } from '@ant-design/icons';
-import { useLogStore, LogEntry } from '../../hooks/useLogStore';
+import { useLogStore } from '../../hooks/useLogStore';
+import type { LogEntry } from '../../hooks/useLogStore';
 import { api } from '../../api';
 
 interface Props {
